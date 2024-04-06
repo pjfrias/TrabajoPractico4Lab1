@@ -1,6 +1,8 @@
 
 package trabajopractico4lab1;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 
 
@@ -8,12 +10,8 @@ import javax.swing.JOptionPane;
  *
  * @author sevas
  */
-public class Convertidor extends javax.swing.JPanel {
+public class Convertidor extends javax.swing.JFrame {
 
-    double gradosC,gradosF;
-    /**
-     * Creates new form Convertidor
-     */
     public Convertidor() {
         initComponents();
     }
@@ -39,6 +37,12 @@ public class Convertidor extends javax.swing.JPanel {
         jLabel4 = new javax.swing.JLabel();
         jSeparator4 = new javax.swing.JSeparator();
         jLabel5 = new javax.swing.JLabel();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Convertidor");
+        setLocationByPlatform(true);
+        setPreferredSize(new java.awt.Dimension(453, 458));
+        setSize(new java.awt.Dimension(453, 431));
 
         jPanel1.setBackground(new java.awt.Color(102, 102, 102));
 
@@ -104,10 +108,8 @@ public class Convertidor extends javax.swing.JPanel {
                                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addComponent(jtcelcius, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(32, 32, 32))
-                                            .addComponent(jSeparator2)))
+                                            .addComponent(jSeparator2, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
+                                            .addComponent(jtcelcius)))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -155,19 +157,19 @@ public class Convertidor extends javax.swing.JPanel {
                 .addContainerGap(38, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(27, Short.MAX_VALUE)
+                .addContainerGap(21, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(23, 23, 23))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(31, Short.MAX_VALUE)
+                .addContainerGap(35, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26))
         );
@@ -175,25 +177,28 @@ public class Convertidor extends javax.swing.JPanel {
 
     private void jbConvertirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbConvertirActionPerformed
         // TODO add your handling code here:
-        if(jtcelcius.getText().length()>0){ // pregunto si no esta vacio el jtextfield y si hay algo lo casteo de string a double
-        gradosC=Double.parseDouble(jtcelcius.getText());
         
-        if(Double.isNaN(gradosC)==true){ //pregunto si gradoC es un numero , isNaN me devuelve true o false
-            JOptionPane.showMessageDialog(this, "Debes colocar una valor Numerico ");  
+        if(verificarGrados()){
        
-         } else{
-                   gradosF=(gradosC*1.8)+32;
-          jtFahranheit.setText(Double.toString(gradosC));
-                    }
-      
-        }else{
-        
-        JOptionPane.showMessageDialog(this, "Debes colocar una Temperatura "); // si el .length es cero devuelve la alerta
-        }
+            jtFahranheit.setText(((Double.parseDouble(jtcelcius.getText())*1.8)+32)+"");
+            jtcelcius.requestFocus();
+            jtcelcius.selectAll();
+        }    
        
                 
     }//GEN-LAST:event_jbConvertirActionPerformed
 
+    public boolean verificarGrados(){
+        Pattern p=Pattern.compile("^[+]?[0-9]*\\.?[0-9]+(?:[eE][-+]?[0-9]+)?$");
+        Matcher m=p.matcher(jtcelcius.getText());
+        if(!m.matches()){
+            JOptionPane.showMessageDialog(this, "Ustede debe ing. una temperatura valida");
+            jtcelcius.requestFocus();
+            jtcelcius.selectAll();
+            return false;
+        }
+        return true;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
@@ -209,13 +214,7 @@ public class Convertidor extends javax.swing.JPanel {
     private javax.swing.JTextField jtFahranheit;
     private javax.swing.JTextField jtcelcius;
     // End of variables declaration//GEN-END:variables
- 
-   
-  
-   
-    
-    
-    };
+ }
 
 
 
