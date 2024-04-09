@@ -188,7 +188,7 @@ public class Convertidor extends javax.swing.JFrame {
     }//GEN-LAST:event_jbConvertirActionPerformed
 
     public boolean verificarGrados(){
-        Pattern p=Pattern.compile("^[+]?[0-9]*\\.?[0-9]+(?:[eE][-+]?[0-9]+)?$");
+        Pattern p=Pattern.compile("^[+-]?[0-9]*\\.?[0-9]+(?:[eE][-+]?[0-9]+)?$");
         Matcher m=p.matcher(jtcelcius.getText());
         if(!m.matches()){
             JOptionPane.showMessageDialog(this, "Ustede debe ing. una temperatura valida");
